@@ -1,0 +1,6 @@
+mysql> create database concessionaria
+-> ;
+Query OK, 1 row affected (0.13 sec)
+mysql> use concessionaria;
+Database changed
+
