@@ -1,0 +1,127 @@
+{
+/*Relação de condomínios apresentando além do nome, o endereço e o total de apartamentos.*/
+	select c.nome, c.endereco, 
+	count(ap.numero_ap)total_apartamentos
+	from apartamento ap inner join condominio c
+	on ap.codigo_condominio=c.codigo_condominio
+	group by c.nome;
+
+/*Altere a estrutura da Tabela apartamento adicionando o campo valor com a seguinte definição.*/
+	alter table ‘imobiliaria_joaodebarro’.’apartamento’ 
+	add column ‘valor’ double(10,2) null default 0 after ‘codigo_condominio’;
+
+/*Atualização de dados*/
+
+	update apartamento
+	set Valor=100000
+	where numero_ap='A-101';
+
+	update apartamento
+	set Valor=115000
+	where numero_ap='A-201';
+
+	update apartamento
+	set Valor=125000
+	where numero_ap='A-301';
+
+	update apartamento
+	set Valor=135000
+	where numero_ap='A-401';
+
+	update apartamento
+	set Valor=150000
+	where numero_ap='A-501';
+
+	update apartamento
+	set Valor=200000
+	where numero_ap='B-101';
+
+	update apartamento
+	set Valor=215000
+	where numero_ap='B-201';
+
+	update apartamento
+	set Valor=225000
+	where numero_ap='B-301';
+
+	update apartamento
+	set Valor=235000
+	where numero_ap='B-401';
+
+	update apartamento
+	set Valor=250000
+	where numero_ap='B-501';
+
+/* Relacione os proprietários apresentando o nome, o telefone, o total de apartamentos que ele possui e o valor total
+ do seu patrimônio considerando somente os apartamentos dos dois condomínios, por ordem alfabética.
+Inclusão de proprietário_apartamento*/
+
+	insert into proprietario_apartamento
+	(numero_ap,rg_proprietario)
+	values
+    ('A-101','123456-10');
+
+	insert into proprietario_apartamento
+	(numero_ap,rg_proprietario)
+	values
+    ('A-201','123456-11');
+    
+	insert into proprietario_apartamento
+	(numero_ap,rg_proprietario)
+	values
+    ('A-301','123456-12');
+    
+    insert into proprietario_apartamento
+	(numero_ap,rg_proprietario)
+	values
+    ('A-401','123456-13');
+    
+     insert into proprietario_apartamento
+	(numero_ap,rg_proprietario)
+	values
+    ('A-501','123456-14');
+    
+	insert into proprietario_apartamento
+	(numero_ap,rg_proprietario)
+	values
+    ('B-101','123456-15');
+    
+	insert into proprietario_apartamento
+	(numero_ap,rg_proprietario)
+	values
+    ('B-201','123456-16');
+    
+    insert into proprietario_apartamento
+	(numero_ap,rg_proprietario)
+	values
+    ('B-301','123456-17');
+    
+    insert into proprietario_apartamento
+	(numero_ap,rg_proprietario)
+	values
+    ('B-401','123456-18');
+    
+     insert into proprietario_apartamento
+	(numero_ap,rg_proprietario)
+	values
+    ('B-501','123456-18');
+
+
+	/* Consulta considerando nome, telefone, total de apartamentos e total do patrimônio */
+
+		select pr.nome, pr.telefone,c.nome,
+		count(ap.numero_ap)total_apartamentos,
+		sum(ap.valor)total_patrimonio
+		from apartamento ap
+			inner join proprietario_apartamento pa
+			on	ap.numero_ap=pa.numero_ap
+			inner join proprietario pr
+			on pr.rg_proprietario=pa.rg_proprietario
+			inner join condominio c
+			on c.codigo_condominio =ap.codigo_condominio
+			group by pr.nome 
+			order by c.nome, pr.nome asc;
+	
+	
+
+}
